@@ -23,12 +23,13 @@ jobs:
     - name: Setup (Linux)
       if: runner.os == 'Linux'
       run: |
+        sudo apt-get update
         sudo apt-get install libsodium-dev
 
     ## MacOS-specific build setup
     # Install libsodium from homebrew
     - name: Setup (MacOS)
-      if: runner.os == 'MacOS'
+      if: runner.os == 'macOS'
       run: brew install libsodium
 
     ## Linux & MacOS-specific build steps
@@ -65,4 +66,3 @@ jobs:
     - name: Test (vs2019)
       if: runner.os == 'Windows'
       run: "& ./bin/${{ matrix.configuration }}/test.exe"
-    
