@@ -51,7 +51,7 @@ jobs:
       if: runner.os == 'Windows'
       uses: microsoft/setup-msbuild@v1.1
       with:
-        vs-version: '16.1.0'
+        vs-version: '[16.1,)'
 
     # Build with premake + msbuild
     - name: Build (vs2019)
@@ -65,4 +65,3 @@ jobs:
     - name: Test (vs2019)
       if: runner.os == 'Windows'
       run: "& ./bin/${{ matrix.configuration }}/test.exe"
-    
