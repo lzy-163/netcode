@@ -14,7 +14,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v4
     - name: Setup premake
       uses: abel0b/setup-premake@v1
 
@@ -23,12 +23,13 @@ jobs:
     - name: Setup (Linux)
       if: runner.os == 'Linux'
       run: |
-        sudo apt-get install libsodium-dev
+        sudo apt-get update
+        sudo apt-get install -y libsodium-dev
 
     ## MacOS-specific build setup
     # Install libsodium from homebrew
     - name: Setup (MacOS)
-      if: runner.os == 'MacOS'
+      if: runner.os == 'macOS'
       run: brew install libsodium
 
     ## Linux & MacOS-specific build steps
@@ -49,7 +50,7 @@ jobs:
     # Set up PATH variables to point to MSBuild from at least VS 16.1 (2019)
     - name: Setup (vs2019)
       if: runner.os == 'Windows'
-      uses: microsoft/setup-msbuild@v1.1
+      uses: microsoft/setup-msbuild@v2
       with:
         vs-version: '16.1.0'
 
@@ -65,4 +66,3 @@ jobs:
     - name: Test (vs2019)
       if: runner.os == 'Windows'
       run: "& ./bin/${{ matrix.configuration }}/test.exe"
-    
